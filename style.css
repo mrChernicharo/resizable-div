@@ -19,13 +19,13 @@ body {
 	height: 100vh;
 }
 
-section#B {
+#section {
 	height: 768px;
 	border: 1px solid #2c3e50;
 	width: var(--w);
 }
 
-section#B .resizable {
+#section .resizable {
 	background: blue;
 	height: var(--h);
 	position: relative;
@@ -33,7 +33,7 @@ section#B .resizable {
 	top: var(--top-offset);
 }
 
-section#B .resizable .thumb {
+#section .resizable .thumb {
 	color: white;
 	background: dodgerblue;
 	height: 10px;

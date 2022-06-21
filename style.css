@@ -1,6 +1,7 @@
 :root {
 	--w: 100px;
 	--h: 100px;
+	--top-offset: 0px;
 }
 
 body {
@@ -18,12 +19,18 @@ body {
 	height: 100vh;
 }
 
+section#B {
+	height: 768px;
+	border: 1px solid #2c3e50;
+	width: var(--w);
+}
+
 section#B .resizable {
 	background: blue;
-	width: var(--w);
 	height: var(--h);
 	position: relative;
 	transition: height ease;
+	top: var(--top-offset);
 }
 
 section#B .resizable .thumb {

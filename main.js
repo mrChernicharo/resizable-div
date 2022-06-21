@@ -2,11 +2,13 @@ import './style.css';
 
 const app = document.querySelector('#app');
 const section = document.querySelector('#section');
-const thumb = document.querySelector('.thumb');
+const bottomThumb = document.querySelector('.bottom-thumb');
+const topThumb = document.querySelector('.top-thumb');
 const resizable = document.querySelector('.resizable');
 let { top, height } = resizable.getBoundingClientRect();
 let { height: sectionHeight } = section.getBoundingClientRect();
-let isResizing = false;
+let isResizingTop = false;
+let isResizingBottom = false;
 let isDragging = false;
 
 resizable.addEventListener('pointerdown', e => {
@@ -17,22 +19,31 @@ resizable.addEventListener('pointerdown', e => {
 });
 
 resizable.addEventListener('pointerover', e => {
-	if (!isResizing && !isDragging) {
+	if (!isResizingBottom && !isResizingTop && !isDragging) {
 		document.body.style.cursor = 'grab';
 	}
 });
 
 resizable.addEventListener('pointerout', e => {
-	if (!isResizing && !isDragging) {
+	if (!isResizingBottom && !isResizingTop && !isDragging) {
 		document.body.style.cursor = 'default';
 	}
 });
 
-thumb.addEventListener('pointerdown', e => {
+topThumb.addEventListener('pointerdown', e => {
 	e.stopPropagation();
-	console.log('thumb:pointerdown', e);
+	console.log('topThumb:pointerdown', e);
 
-	isResizing = true;
+	isResizingTop = true;
+
+	document.body.style.cursor = 'row-resize';
+});
+
+bottomThumb.addEventListener('pointerdown', e => {
+	e.stopPropagation();
+	console.log('bottomThumb:pointerdown', e);
+
+	isResizingBottom = true;
 
 	document.body.style.cursor = 'row-resize';
 });
@@ -40,15 +51,25 @@ thumb.addEventListener('pointerdown', e => {
 document.addEventListener('pointerup', e => {
 	console.log('document:pointerup', e);
 
-	isResizing = false;
+	isResizingTop = false;
+	isResizingBottom = false;
 	isDragging = false;
 	document.body.style.cursor = 'default';
 });
 
 document.addEventListener('pointermove', e => {
-	// resizing
+	// resizing top
+	if (isResizingTop && top + e.movementY >= 0 && height - e.movementY >= 56) {
+		height -= e.movementY;
+		top += e.movementY;
+
+		document.documentElement.style.setProperty('--h', height + 'px');
+		document.documentElement.style.setProperty('--top-offset', top + 'px');
+	}
+
+	// resizing bottom
 	if (
-		isResizing &&
+		isResizingBottom &&
 		height + e.movementY > 40 &&
 		top + height + e.movementY < sectionHeight
 	) {

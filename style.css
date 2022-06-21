@@ -4,6 +4,10 @@
 	--top-offset: 0px;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 body {
 	margin: 0;
 }
@@ -23,10 +27,12 @@ body {
 	height: 768px;
 	border: 1px solid #2c3e50;
 	width: var(--w);
+	margin: 0 auto;
 }
 
 #section .resizable {
 	background: blue;
+	color: white;
 	height: var(--h);
 	position: relative;
 	transition: height ease;
@@ -34,12 +40,20 @@ body {
 }
 
 #section .resizable .thumb {
-	color: white;
 	background: dodgerblue;
-	height: 10px;
+	user-select: none;
 	width: 100%;
 	position: absolute;
+}
+
+.top-thumb {
+	top: 0;
+	right: 0;
+	height: 8px;
+}
+
+.bottom-thumb {
+	height: 10px;
 	bottom: 0;
 	right: 0;
-	user-select: none;
 }
